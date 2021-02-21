@@ -1,0 +1,66 @@
+# depslib dependency file v1.0
+1613232974 source:/home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/Camera.cpp
+	"Camera.h"
+
+1613232121 source:/home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/ImagePlane.cpp
+	"Vector.h"
+
+1613122249 source:/home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/main.cpp
+	<iostream>
+
+1613100738 source:/home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/Plane.cpp
+
+1613122307 source:/home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/PointLight.cpp
+
+1613919412 source:/home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/Ray.cpp
+	"Ray.h"
+
+1613100703 source:/home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/Trace.cpp
+
+1613855173 /home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/Camera.h
+	"Vector.h"
+
+1613907170 /home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/Vector.h
+	<cmath>
+	<iostream>
+
+1613932276 source:/home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/raytrace.cpp
+	<iostream>
+	<fstream>
+	<vector>
+	"Object.h"
+	"Vector.h"
+	"ImagePlane.h"
+	"PointLight.h"
+	"Camera.h"
+	"Plane.h"
+	"Sphere.h"
+	"Ray.h"
+
+1613932261 /home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/Object.h
+	"Vector.h"
+	"Ray.h"
+
+1613884461 /home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/Ray.h
+	"Vector.h"
+
+1613930785 /home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/ImagePlane.h
+	"Vector.h"
+
+1613853870 /home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/PointLight.h
+	"Vector.h"
+
+1613233960 /home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/Trace.h
+
+1613932216 /home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/Plane.h
+	"Vector.h"
+	"Ray.h"
+	"Object.h"
+
+1613250327 /home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/Objects.h
+
+1613932187 /home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/Sphere.h
+	<cmath>
+	"Vector.h"
+	"Object.h"
+
