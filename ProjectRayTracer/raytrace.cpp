@@ -9,44 +9,22 @@
 #include "Plane.h"
 #include "Sphere.h"
 #include "Ray.h"
-/*
-Using the ray tracer described above, the scene you must render consists of
-five infinite planes and one sphere as follows:
 
-All of the planes and sphere have Lambertian reflectivity.
-*/
-// Color Trace( const Ray& r, const Scene& s );
-
-
-// --------------------------------------------------------------
-// PROCESS
-// --------------------------------------------------------------
-/*
-    1. Call the camera’s view(x,y) method with the x,y for the given pixel,
-        returning the pixel direction vector.
-    2. Initialize a ray with the position of the camera and the pixel direction.
-    3. Call the Trace function, which returns a color following the outcome of
-        its intersection tests (as described above).
-    4. Set the color of the pixel to be the color returned by Trace.
-*/
-
-
-/*
-Class: Camera, Ray, Vector, ImagePlane, Geometry, SceneObject, SceneContainer
-Method: Trace
-Main File: read input parameters, setup render, output image
-
-Output Image in PPM format
-*/
 using namespace std;
 using namespace chromeball;
+#if defined __linux__ || defined __APPLE__
 
+#else
+// Windows doesn't define these values by default, Linux does
+#define M_PI 3.141592653589793
+#define INFINITY 1e6
+#endif
 bool DEBUG = true;
 
 void savePpm(ImagePlane& imagePlane)
 {
     FILE *fp;
-    fp = fopen("output/raytrace.ppm","w");
+    fp = fopen("raytrace.ppm","w");
     fprintf(fp,"P3\n%d %d\n%d\n", imagePlane.getNx(), imagePlane.getNy(), 255);
 
     for (int j = 0; j < imagePlane.getNy(); ++j)
@@ -60,19 +38,22 @@ void savePpm(ImagePlane& imagePlane)
      fclose(fp);
 }
 
-Color trace( const Ray& r, const vector<SceneObject*> sceneObjects, const vector<PointLight*> pointLights){
+Color trace(const Ray& r, const vector<SceneObject*> sceneObjects, const vector<PointLight*> pointLights)
+{
 
     // check for the intersection. if found any then return the color of nearest object
 
     float nearestIntersectionDistance = 1000000.0;
     // initialize with black color
     Color intersectionColor = Color({0, 0, 0});
-    for(unsigned int i=0; i<sceneObjects.size(); ++i){
+    for(unsigned int i=0; i<sceneObjects.size(); ++i)
+    {
         // cout<<"DEBUG::Trace:"<<i+2<<", ["<<scene_objects.size()<<"]"<<endl;
         SceneObject* obj = sceneObjects[i];
         float intersectionDistance = obj->intersection(r);
         //cout<<"i: "<<i<<" , Scene obje size: "<<scene_objects.size()<<" |intersectionDistance: " <<intersectionDistance<< " |nearestIntersectionDistance: "<<nearestIntersectionDistance<<endl;
-        if(intersectionDistance>0  && intersectionDistance<nearestIntersectionDistance){
+        if(intersectionDistance>0  && intersectionDistance<nearestIntersectionDistance)
+        {
             intersectionColor = obj->getColor(r.getIntersectionPoint(intersectionDistance), pointLights);
             nearestIntersectionDistance = intersectionDistance;
             //if(true)cout<<"DEBUG::Intersection:"<<i<<" Distance: "<<nearestIntersectionDistance<<endl;
@@ -84,25 +65,28 @@ Color trace( const Ray& r, const vector<SceneObject*> sceneObjects, const vector
 
 void raytrace(Camera& camera, ImagePlane& imagePlane, const vector<SceneObject*> sceneObjects, const vector<PointLight*> pointLights){
     if (DEBUG)cout<<"DEBUG::RayTrace:1"<<endl;
-    for(int j=0; j<imagePlane.getNy(); j++){
-        for (int i=0; i<imagePlane.getNx(); i++){
+    for(int j=0; j<imagePlane.getNy(); j++)
+    {
+        for (int i=0; i<imagePlane.getNx(); i++)
+        {
             // 1. call cameras view(x,y) method for a givem pixel. returning a pixel direction vector
             Vector pixelDirection = camera.view(float(i)/imagePlane.getNx(), float(j)/imagePlane.getNy());
             // 2. initialize a ray with a camera position and pixel direction
             Ray ray = Ray(camera.getPosition(), pixelDirection);
             // 3. call the Trace function which return color of the intersection
             Color color = trace(ray, sceneObjects, pointLights);
-            // why is same value returning by the object?
             //cout<<"DEBUG :: RAYTRACE :: TRACE";color.printColor();
+            // 4. set the color of the pixel
             imagePlane.set(i, j, color);
-            if(false){
+            if(false)
+            {
                 cout<<"DEBUG::RayTrace: (i, j) = ("<<i<<", "<<j<<") => Color:"<<endl;
                 color.printColor();
             }
         }
     }
     if (DEBUG)cout<<"DEBUG::RayTrace:10"<<endl;
-    // 4. set the color of the pixel
+
 }
 
 
@@ -110,9 +94,6 @@ int main()
 {
 
     // do ray tracing and save image
-    if(DEBUG)
-        cout << "Ray Tracing..." << endl;
-
     PointLight pointLight1 = PointLight(Vector(-1, -1, 7), Color({2, 2, 2}));
     vector<PointLight*> pointLights;
     pointLights.push_back(&pointLight1);
