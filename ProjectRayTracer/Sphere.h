@@ -2,12 +2,14 @@
 #ifndef ___SPHERE_H____
 #define ___SPHERE_H____
 #include<cmath>
+#include <vector>
 #include "Vector.h"
-#include "Object.h"
+#include "PointLight.h"
+#include "SceneObject.h"
 
 using namespace chromeball;
 
-class Sphere: public Object{
+class Sphere: public SceneObject{
     private:
         Vector _position;
         float _radius;
@@ -17,7 +19,7 @@ class Sphere: public Object{
         Sphere(Vector, float, Color);
         ~Sphere(){};
         float intersection(const Ray&) const;
-        const Color& getColor() const;
+        const Color getColor(const Vector&, const vector<PointLight*> pointLights);
 };
 
 Sphere::Sphere(): _position(Vector(0,0,0)), _radius(0.0), _color(Color({0,0,0}))
@@ -52,7 +54,22 @@ float Sphere::intersection(const Ray& r) const{
 
 }
 
-const Color& Sphere::getColor() const{
-    return _color;
+const Color Sphere::getColor(const Vector& intersectionPoint, const vector<PointLight*> pointLights)
+{
+    Color c_sum({0, 0, 0}) ;
+    for(unsigned int i=0; i<pointLights.size(); ++i)
+    {
+        PointLight* pointLight = pointLights[i];
+        Vector L = intersectionPoint-pointLight->getPosition();
+        L.normalize();
+
+        // surface normal
+        Vector surfaceNormal = intersectionPoint-_position;
+        // confusion: normal direction (ns ?)
+        float ri = std::max((-surfaceNormal.normal()*L)/M_PI, 0.0);
+        Color tempColor = pointLight->getColor()*ri;
+        c_sum = c_sum+tempColor;
+    }
+    return _color*c_sum;
 }
 #endif // ___SPHERE_H____

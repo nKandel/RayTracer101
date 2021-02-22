@@ -16,3 +16,7 @@ const Vector Ray::getDirection() const{
 const Vector& Ray::getPosition() const{
     return _position;
 }
+
+const Vector Ray::getIntersectionPoint(float t) const{
+    return _position+t*_direction;
+}

@@ -14,5 +14,6 @@ class Ray{
         ~Ray(){};
         const Vector& getPosition() const;
         const Vector getDirection() const;
+        const Vector getIntersectionPoint(float t) const;
 };
 #endif // ___RAY_H____

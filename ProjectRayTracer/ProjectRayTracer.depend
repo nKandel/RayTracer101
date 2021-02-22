@@ -12,7 +12,7 @@
 
 1613122307 source:/home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/PointLight.cpp
 
-1613939521 source:/home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/Ray.cpp
+1613986056 source:/home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/Ray.cpp
 	"Ray.h"
 
 1613100703 source:/home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/Trace.cpp
@@ -20,15 +20,15 @@
 1613936872 /home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/Camera.h
 	"Vector.h"
 
-1613907170 /home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/Vector.h
+1613987520 /home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/Vector.h
 	<cmath>
 	<iostream>
 
-1613939393 source:/home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/raytrace.cpp
+1613998831 source:/home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/raytrace.cpp
 	<iostream>
 	<fstream>
 	<vector>
-	"Object.h"
+	"SceneObject.h"
 	"Vector.h"
 	"ImagePlane.h"
 	"PointLight.h"
@@ -41,7 +41,7 @@
 	"Vector.h"
 	"Ray.h"
 
-1613939536 /home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/Ray.h
+1613986016 /home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/Ray.h
 	"Vector.h"
 
 1613939355 /home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/ImagePlane.h
@@ -52,15 +52,25 @@
 
 1613233960 /home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/Trace.h
 
-1613939611 /home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/Plane.h
+1613987908 /home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/Plane.h
+	<vector>
 	"Vector.h"
 	"Ray.h"
-	"Object.h"
+	"PointLight.h"
+	"SceneObject.h"
 
 1613250327 /home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/Objects.h
 
-1613939501 /home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/Sphere.h
+1613998738 /home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/Sphere.h
 	<cmath>
+	<vector>
 	"Vector.h"
-	"Object.h"
+	"PointLight.h"
+	"SceneObject.h"
+
+1613987935 /home/hanuman/edu/clemson/project-repo/6050_cg/ProjectRayTracer/SceneObject.h
+	<vector>
+	"Vector.h"
+	"PointLight.h"
+	"Ray.h"
 

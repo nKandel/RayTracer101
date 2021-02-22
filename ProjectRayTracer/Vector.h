@@ -273,6 +273,18 @@ struct Color
     {
         std::cout<<"[R,G,B] = ["<<r<<", "<<g<<", "<<b<<"]"<<std::endl;
     }
+    Color operator+ ( const Color& v ) const
+    {
+        return Color({r + v.r, g + v.g, b + v.b});
+    }
+    Color operator* ( const double& v ) const
+    {
+        return Color({r * v, g * v, b * v} );
+    }
+    Color operator* ( const Color& v ) const
+    {
+        return Color({r * v.r, g * v.g, b * v.b} );
+    }
 };
 
 
