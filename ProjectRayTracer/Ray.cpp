@@ -10,9 +10,9 @@ Ray::Ray(Vector position, Vector direction):_position(position), _direction(dire
     _direction.normalize();
 }
 
-const Vector Ray::get_direction() const{
+const Vector Ray::getDirection() const{
     return _direction;
 }
-const Vector& Ray::get_position() const{
+const Vector& Ray::getPosition() const{
     return _position;
 }

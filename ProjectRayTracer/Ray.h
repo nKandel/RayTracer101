@@ -12,7 +12,7 @@ class Ray{
     	Ray ();
         Ray (Vector, Vector);
         ~Ray(){};
-        const Vector& get_position() const;
-        const Vector get_direction() const;
+        const Vector& getPosition() const;
+        const Vector getDirection() const;
 };
 #endif // ___RAY_H____

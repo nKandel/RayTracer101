@@ -32,8 +32,8 @@ Sphere::Sphere(Vector p, float r, Color c): _position(p), _radius(r), _color(c)
 float Sphere::intersection(const Ray& r) const{
     // implement intersection logic here
     // if no intersection
-    Vector rayPosition = r.get_position();
-    Vector rayDirection = r.get_direction();
+    Vector rayPosition = r.getPosition();
+    Vector rayDirection = r.getDirection();
     Vector r0_pc = rayPosition-_position;
     float f = pow(rayDirection*r0_pc,2)+pow(_radius, 2)-pow(r0_pc.magnitude(), 2);
     float intersectionDistance =-1;

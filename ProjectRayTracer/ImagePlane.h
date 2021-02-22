@@ -15,8 +15,8 @@ class ImagePlane
         ~ImagePlane(){};
         Color get(int, int) const;
         void set(int i, int j, const Color& c);
-        int get_Nx() const;
-        int get_Ny() const;
+        int getNx() const;
+        int getNy() const;
         int getRowValue(int i, int j) const;
 
 };
@@ -46,15 +46,16 @@ Color ImagePlane::get(int i, int j) const
 
 int ImagePlane::getRowValue(int i, int j) const
 {
+    //std::cout<<"DEBUG:: i,j : "<<i<<", "<<j<<" single dim: "<<i+j*_Nx<<std::endl;
     return i+j*_Nx;
 }
 
-int ImagePlane::get_Nx() const
+int ImagePlane::getNx() const
 {
     return _Nx;
 }
 
-int ImagePlane::get_Ny() const
+int ImagePlane::getNy() const
 {
     return _Ny;
 }

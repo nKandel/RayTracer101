@@ -39,8 +39,8 @@ const Color& Plane::getColor() const{
 float Plane::intersection(const Ray& r) const{
     // no intersection
     // https://stackoverflow.com/a/23976134/1406040
-    Vector rayPosition = r.get_position();
-    Vector rayDirection = r.get_direction().normal();
+    Vector rayPosition = r.getPosition();
+    Vector rayDirection = r.getDirection().normal();
     double denom = _normalDirection*rayDirection;
     if (abs(denom) > 0.0001f) {
         float t = (_position - rayPosition)*_normalDirection / denom;

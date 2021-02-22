@@ -41,69 +41,70 @@ Output Image in PPM format
 using namespace std;
 using namespace chromeball;
 
-bool DEBUG = false;
+bool DEBUG = true;
 
-Color& Trace( const Ray& r, const vector<Object*> scene_objects){
-
-    // check for the intersection. if found any then return the color of nearest object
-
-    float nearestIntersectionDistance = 100000000.0;
-    // initialize with black color
-    Color intersectionColor = Color({0, 0, 0});
-    for(int i=0; i<scene_objects.size(); i++){
-        // cout<<"DEBUG::Trace:"<<i+2<<", ["<<scene_objects.size()<<"]"<<endl;
-        Object* obj = scene_objects[i];
-        float intersectionDistance = obj->intersection(r);
-        if(intersectionDistance>0  && intersectionDistance<nearestIntersectionDistance){
-            intersectionColor = obj->getColor();
-            nearestIntersectionDistance = intersectionDistance;
-            if(true)cout<<"DEBUG::Intersection:"<<i+1<<" Distance: "<<nearestIntersectionDistance<<endl;
-        }
-    }
-
-    return intersectionColor;
-};
-
-void raytrace(Camera* camera, ImagePlane imagePlane, const vector<Object*> scene_objects){
-    if (DEBUG)cout<<"DEBUG::RayTrace:1"<<endl;
-    for (int i=0; i<imagePlane.get_Nx(); i++){
-        for(int j=0; j<imagePlane.get_Ny(); j++){
-            // 1. call cameras view(x,y) method for a givem pixel. returning a pixel direction vector
-            Vector pixelDirection = camera->view(i/imagePlane.get_Nx(), j/imagePlane.get_Ny());
-            // 2. initialize a ray with a camera position and pixel direction
-            Ray ray = Ray(camera->getPosition(), pixelDirection);
-            // 3. call the Trace function which return color of the intersection
-            Color color = Trace(ray, scene_objects);
-            // why is same value returning by the object?
-            imagePlane.set(i, j, color);
-            if(true){
-                cout<<"DEBUG::RayTrace: (i, j) = ("<<i<<", "<<j<<") => Color:"<<endl;
-                color.printColor();
-                if(j>100) break;
-            }
-        }
-        if(i>10) break;
-    }
-    if (DEBUG)cout<<"DEBUG::RayTrace:10"<<endl;
-    // 4. set the color of the pixel
-}
-
-void save_ppm(ImagePlane& imagePlane)
+void savePpm(ImagePlane& imagePlane)
 {
     FILE *fp;
     fp = fopen("raytrace.ppm","w");
-    fprintf(fp,"P3\n%d %d\n%d\n", imagePlane.get_Nx(), imagePlane.get_Ny(), 255);
+    fprintf(fp,"P3\n%d %d\n%d\n", imagePlane.getNx(), imagePlane.getNy(), 255);
 
-    for (int j = 0; j < imagePlane.get_Ny(); ++j)
-        for (int i = 0; i < imagePlane.get_Nx(); ++i)
+    for (int j = 0; j < imagePlane.getNy(); ++j)
+        for (int i = 0; i < imagePlane.getNx(); ++i)
         {
             Color c = imagePlane.get(i, j);
-            fprintf(fp, "%d %d %d\n", int(min(double(1), c.r)*256), int(min(double(1), c.g)*256), int(min(double(1), c.b)*256));       // red, green, blue
+            fprintf(fp, "%d %d %d\n", int(min(double(1), c.r)*255), int(min(double(1), c.g)*255), int(min(double(1), c.b)*255));       // red, green, blue
         }
 
 
      fclose(fp);
 }
+
+Color Trace( const Ray& r, const vector<Object*> scene_objects){
+
+    // check for the intersection. if found any then return the color of nearest object
+
+    float nearestIntersectionDistance = 1000000.0;
+    // initialize with black color
+    Color intersectionColor = Color({0, 0, 0});
+    for(unsigned int i=0; i<scene_objects.size(); ++i){
+        // cout<<"DEBUG::Trace:"<<i+2<<", ["<<scene_objects.size()<<"]"<<endl;
+        Object* obj = scene_objects[i];
+        float intersectionDistance = obj->intersection(r);
+        //cout<<"i: "<<i<<" , Scene obje size: "<<scene_objects.size()<<" |intersectionDistance: " <<intersectionDistance<< " |nearestIntersectionDistance: "<<nearestIntersectionDistance<<endl;
+        if(intersectionDistance>0  && intersectionDistance<nearestIntersectionDistance){
+            intersectionColor = obj->getColor();
+            nearestIntersectionDistance = intersectionDistance;
+            //if(true)cout<<"DEBUG::Intersection:"<<i<<" Distance: "<<nearestIntersectionDistance<<endl;
+        }
+    };
+    //cout<<"DEBUG :: TRACE: RETURN ";intersectionColor.printColor();
+    return intersectionColor;
+};
+
+void raytrace(Camera& camera, ImagePlane& imagePlane, const vector<Object*> scene_objects){
+    if (DEBUG)cout<<"DEBUG::RayTrace:1"<<endl;
+    for(unsigned int j=0; j<imagePlane.getNy(); j++){
+        for (unsigned int i=0; i<imagePlane.getNx(); i++){
+            // 1. call cameras view(x,y) method for a givem pixel. returning a pixel direction vector
+            Vector pixelDirection = camera.view(float(i)/imagePlane.getNx(), float(j)/imagePlane.getNy());
+            // 2. initialize a ray with a camera position and pixel direction
+            Ray ray = Ray(camera.getPosition(), pixelDirection);
+            // 3. call the Trace function which return color of the intersection
+            Color color = Trace(ray, scene_objects);
+            // why is same value returning by the object?
+            //cout<<"DEBUG :: RAYTRACE :: TRACE";color.printColor();
+            imagePlane.set(i, j, color);
+            if(false){
+                cout<<"DEBUG::RayTrace: (i, j) = ("<<i<<", "<<j<<") => Color:"<<endl;
+                color.printColor();
+            }
+        }
+    }
+    if (DEBUG)cout<<"DEBUG::RayTrace:10"<<endl;
+    // 4. set the color of the pixel
+}
+
 
 int main()
 {
@@ -138,9 +139,9 @@ int main()
     // fire ray from camera to the image plane. for each pixel on the imageplane find the nearest interaction
     if(DEBUG)
         cout<<"DEBUG::MAIN:1"<<endl;
-    raytrace(&camera, imagePlane, scene_objects);
+    raytrace(camera, imagePlane, scene_objects);
 
     // save image
-    save_ppm(imagePlane);
+    savePpm(imagePlane);
     return 0;
 }

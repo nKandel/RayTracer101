@@ -13,19 +13,19 @@ class PointLight{
         PointLight();
         PointLight(Vector, Color);
         ~PointLight(){};
-        const Vector& get_position() const;
-        const Color get_color() const;
+        const Vector& getPosition() const;
+        const Color getColor() const;
 };
 
 PointLight::PointLight(Vector position, Color color){
     _position = position;
     _color = color;
 }
-const Vector& PointLight::get_position() const{
+const Vector& PointLight::getPosition() const{
     return _position;
 }
 
-const Color PointLight::get_color() const{
+const Color PointLight::getColor() const{
     return _color;
 }
 
