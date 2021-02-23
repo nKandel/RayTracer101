@@ -1,36 +1,4 @@
-#ifndef ___PLANE_H____
-#define ___PLANE_H____
-#include <vector>
-#include "Vector.h"
-#include "Ray.h"
-#include "PointLight.h"
-#include "SceneObject.h"
-/*
-
-*/
-
-#if defined __linux__ || defined __APPLE__
-
-#else
-// Windows doesn't define these values by default, Linux does
-#define M_PI 3.141592653589793
-#endif
-
-using namespace chromeball;
-
-class Plane : public SceneObject {
-    private:
-        Vector _position;
-        Vector _normalDirection;
-        Color _color;
-    public:
-        Plane();
-        Plane(Vector, Vector, Color);
-
-        float intersection(const Ray& r) const;
-        const Color getColor(const Vector&, const vector<PointLight*>);
-        ~Plane(){};
-};
+#include "Plane.h"
 
 Plane::Plane()
 {
@@ -38,7 +6,9 @@ Plane::Plane()
 }
 
 Plane::Plane(Vector position, Vector normalDirection, Color color):
-_position(position), _normalDirection(normalDirection.normal()), _color(color)
+    _position(position),
+    _normalDirection(normalDirection.normal()),
+    _color(color)
 {
 }
 
@@ -58,7 +28,8 @@ const Color Plane::getColor(const Vector& intersectionPoint, const vector<PointL
     return _color*c_sum;
 }
 
-float Plane::intersection(const Ray& r) const{
+float Plane::intersection(const Ray& r) const
+{
     // no intersection
     // https://stackoverflow.com/a/23976134/1406040
     Vector rayPosition = r.getPosition();
@@ -72,4 +43,3 @@ float Plane::intersection(const Ray& r) const{
     }
     return -1.0;
 }
-#endif

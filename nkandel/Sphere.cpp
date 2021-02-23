@@ -1,26 +1,4 @@
-
-#ifndef ___SPHERE_H____
-#define ___SPHERE_H____
-#include<cmath>
-#include <vector>
-#include "Vector.h"
-#include "PointLight.h"
-#include "SceneObject.h"
-
-using namespace chromeball;
-
-class Sphere: public SceneObject{
-    private:
-        Vector _position;
-        float _radius;
-        Color _color;
-    public:
-        Sphere();
-        Sphere(Vector, float, Color);
-        ~Sphere(){};
-        float intersection(const Ray&) const;
-        const Color getColor(const Vector&, const vector<PointLight*> pointLights);
-};
+#include "Sphere.h"
 
 Sphere::Sphere(): _position(Vector(0,0,0)), _radius(0.0), _color(Color({0,0,0}))
 {
@@ -39,14 +17,19 @@ float Sphere::intersection(const Ray& r) const{
     Vector r0_pc = rayPosition-_position;
     float f = pow(rayDirection*r0_pc,2)+pow(_radius, 2)-pow(r0_pc.magnitude(), 2);
     float intersectionDistance =-1;
-    if(f==0.0){
+    if(f==0.0)
+    {
         // do we get exact 0.0 on computer's double point calculation?
         intersectionDistance = rayDirection*r0_pc;
-    }else if(f>0){
+    }else if(f>0)
+    {
         float t_minus = -rayDirection*r0_pc - std::sqrt(f);
-        if(t_minus>0){
+        if(t_minus>0)
+        {
             intersectionDistance = t_minus;
-        }else{
+        }
+        else
+        {
             intersectionDistance = -rayDirection*r0_pc + std::sqrt(f);
         }
     }
@@ -72,4 +55,3 @@ const Color Sphere::getColor(const Vector& intersectionPoint, const vector<Point
     }
     return _color*c_sum;
 }
-#endif // ___SPHERE_H____

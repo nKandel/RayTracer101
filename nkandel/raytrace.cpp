@@ -9,9 +9,11 @@
 #include "Plane.h"
 #include "Sphere.h"
 #include "Ray.h"
+#include "Trace.h"
 
 using namespace std;
 using namespace chromeball;
+
 #if defined __linux__ || defined __APPLE__
 
 #else
@@ -19,12 +21,13 @@ using namespace chromeball;
 #define M_PI 3.141592653589793
 #define INFINITY 1e6
 #endif
+
 bool DEBUG = true;
 
 void savePpm(ImagePlane& imagePlane)
 {
     FILE *fp;
-    fp = fopen("raytrace.ppm","w");
+    fp = fopen("output.ppm","w");
     fprintf(fp,"P3\n%d %d\n%d\n", imagePlane.getNx(), imagePlane.getNy(), 255);
 
     for (int j = 0; j < imagePlane.getNy(); ++j)
@@ -38,31 +41,6 @@ void savePpm(ImagePlane& imagePlane)
      fclose(fp);
 }
 
-Color trace(const Ray& r, const vector<SceneObject*> sceneObjects, const vector<PointLight*> pointLights)
-{
-
-    // check for the intersection. if found any then return the color of nearest object
-
-    float nearestIntersectionDistance = 1000000.0;
-    // initialize with black color
-    Color intersectionColor = Color({0, 0, 0});
-    for(unsigned int i=0; i<sceneObjects.size(); ++i)
-    {
-        // cout<<"DEBUG::Trace:"<<i+2<<", ["<<scene_objects.size()<<"]"<<endl;
-        SceneObject* obj = sceneObjects[i];
-        float intersectionDistance = obj->intersection(r);
-        //cout<<"i: "<<i<<" , Scene obje size: "<<scene_objects.size()<<" |intersectionDistance: " <<intersectionDistance<< " |nearestIntersectionDistance: "<<nearestIntersectionDistance<<endl;
-        if(intersectionDistance>0  && intersectionDistance<nearestIntersectionDistance)
-        {
-            intersectionColor = obj->getColor(r.getIntersectionPoint(intersectionDistance), pointLights);
-            nearestIntersectionDistance = intersectionDistance;
-            //if(true)cout<<"DEBUG::Intersection:"<<i<<" Distance: "<<nearestIntersectionDistance<<endl;
-        }
-    };
-    //cout<<"DEBUG :: TRACE: RETURN ";intersectionColor.printColor();
-    return intersectionColor;
-};
-
 void raytrace(Camera& camera, ImagePlane& imagePlane, const vector<SceneObject*> sceneObjects, const vector<PointLight*> pointLights){
     if (DEBUG)cout<<"DEBUG::RayTrace:1"<<endl;
     for(int j=0; j<imagePlane.getNy(); j++)
@@ -74,7 +52,7 @@ void raytrace(Camera& camera, ImagePlane& imagePlane, const vector<SceneObject*>
             // 2. initialize a ray with a camera position and pixel direction
             Ray ray = Ray(camera.getPosition(), pixelDirection);
             // 3. call the Trace function which return color of the intersection
-            Color color = trace(ray, sceneObjects, pointLights);
+            Color color = Trace(ray, sceneObjects, pointLights);
             //cout<<"DEBUG :: RAYTRACE :: TRACE";color.printColor();
             // 4. set the color of the pixel
             imagePlane.set(i, j, color);

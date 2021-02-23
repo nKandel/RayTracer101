@@ -5,9 +5,11 @@
 
 using namespace chromeball;
 
-class Ray{
+class Ray
+{
     private:
         Vector _position, _direction;
+
     public:
     	Ray ();
         Ray (Vector, Vector);
