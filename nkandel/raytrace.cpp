@@ -22,7 +22,7 @@ using namespace chromeball;
 #define INFINITY 1e6
 #endif
 
-bool DEBUG = true;
+bool DEBUG = false;
 
 void savePpm(ImagePlane& imagePlane)
 {
@@ -56,7 +56,7 @@ void raytrace(Camera& camera, ImagePlane& imagePlane, const vector<SceneObject*>
             //cout<<"DEBUG :: RAYTRACE :: TRACE";color.printColor();
             // 4. set the color of the pixel
             imagePlane.set(i, j, color);
-            if(false)
+            if(DEBUG)
             {
                 cout<<"DEBUG::RayTrace: (i, j) = ("<<i<<", "<<j<<") => Color:"<<endl;
                 color.printColor();

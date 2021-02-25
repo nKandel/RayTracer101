@@ -19,7 +19,7 @@ class ImagePlane
         void set(int i, int j, const Color& c);
         int getNx() const;
         int getNy() const;
-        int getRowValue(int i, int j) const;
+        int get1DIndex(int i, int j) const;
 
 };
 #endif // ___IMAGEPLANE_H____

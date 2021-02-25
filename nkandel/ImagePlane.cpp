@@ -10,15 +10,15 @@ ImagePlane::ImagePlane(int Nx, int Ny): _Nx(Nx), _Ny(Ny)
     _data.resize(_Nx*_Ny);
 }
 
-int ImagePlane::getRowValue(int i, int j) const
+int ImagePlane::get1DIndex(int i, int j) const
 {
-    //std::cout<<"DEBUG:: i,j : "<<i<<", "<<j<<" single dim: "<<i+j*_Nx<<std::endl;
+    // converting 2D indexing to 1D indexing
     return i+j*_Nx;
 }
 
 void ImagePlane::set(int i, int j, const Color& c)
 {
-    int val = getRowValue(i, j);
+    int val = get1DIndex(i, j);
     //std::cout<<"Debug :: ImagePlane:set 1"<<std::endl;
     _data[val] = c;
     //std::cout<<"Debug :: ImagePlane:set 2"<<std::endl;
@@ -26,7 +26,7 @@ void ImagePlane::set(int i, int j, const Color& c)
 
 Color ImagePlane::get(int i, int j) const
 {
-    return _data[getRowValue(i, j)];
+    return _data[get1DIndex(i, j)];
 }
 
 int ImagePlane::getNx() const

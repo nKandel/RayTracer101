@@ -1,8 +1,8 @@
 #include "Camera.h"
 Camera::Camera():
     _position(Vector(0,0,0)),
-    _viewDirection(Vector (0,0,0)),
-    _upDirection(Vector (0,0,0)),
+    _viewDirection(Vector (1,0,0)),
+    _upDirection(Vector (1,0,0)),
     _aspectRatio(1.0),
     _hFov(0.0)
 {}
